@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -58,6 +59,10 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
 
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

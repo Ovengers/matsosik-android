@@ -31,8 +31,8 @@ android {
 
         // NaverMap Client Id 설정
         val localProperties = readProperties(file("${project.rootDir}/local.properties"))
-        val naverMapApiKey = localProperties["naver_client_id"]
-        manifestPlaceholders["naver_client_id"] = naverMapApiKey as String
+        val naverMapClientId = localProperties["naver.client.id"]
+        resValue("string", "naver_client_id", naverMapClientId.toString())
     }
 
     buildTypes {
@@ -78,7 +78,7 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     // NaverMap
-    implementation(libs.naver.map)
+    implementation(libs.bundles.naver.map)
 
     // Timber
     implementation(libs.timber)

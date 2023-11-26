@@ -33,6 +33,7 @@ androidxEspressoCore = "3.5.1"
 
 ## NaverMap
 naverMap = "3.17.0"
+naverMapCompose = "1.4.0"
 
 ## Timber
 timber = "5.0.1"
@@ -56,6 +57,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 
 ## NaverMap
 naver-map = { group = "com.naver.maps", name = "map-sdk", version.ref = "naverMap" }
+naver-map-compose = { group = "io.github.fornewid", name = "naver-map-compose", version.ref = "naverMapCompose" }
 
 ## Timer
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
@@ -83,6 +85,8 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 android = ["androidx-core", "androidx-lifecycle-runtime", "androidx-activity-compose"]
 ## Compose
 compose = ["compose-ui-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3"]
+## NaverMap
+naver-map = ["naver-map", "naver-map-compose"]
 ## Unit Test
 unit-test = ["junit"]
 ## AndroidTest

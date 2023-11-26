@@ -67,6 +67,9 @@ dependencies {
     // NaverMap
     implementation(libs.naver.map)
 
+    // Timber
+    implementation(libs.timber)
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

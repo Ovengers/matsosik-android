@@ -4,16 +4,17 @@ plugins {
     id("kotlin-kapt")
 }
 
+
 android {
-    namespace = "nbt.party.o.matsosik"
-    compileSdk = 34
+    namespace = libs.versions.packageName.get()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "nbt.party.o.matsosik"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = libs.versions.packageName.get()
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,7 +63,7 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

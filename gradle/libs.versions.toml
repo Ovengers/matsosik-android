@@ -1,4 +1,16 @@
 [versions]
+## ApplicationId
+packageName = "nbt.party.o.matsosik"
+
+## Sdk
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "24"
+
+## Version
+versionCode = "1"
+versionName = "1.0.0"
+
 ## Plugin
 androidGradlePlugin = "8.1.4"
 kotlin = "1.9.20"

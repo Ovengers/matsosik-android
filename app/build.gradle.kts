@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    // NaverMap
+    implementation(libs.naver.map)
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

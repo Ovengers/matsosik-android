@@ -1,11 +1,19 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
 }
 
+fun readProperties(propertiesFile: File) = Properties().apply {
+    propertiesFile.inputStream().use { fis ->
+        load(fis)
+    }
+}
 
 android {
+
     namespace = libs.versions.packageName.get()
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -20,6 +28,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // NaverMap Client Id 설정
+        val localProperties = readProperties(file("${project.rootDir}/local.properties"))
+        val naverMapApiKey = localProperties["naver_client_id"]
+        manifestPlaceholders["naver_client_id"] = naverMapApiKey as String
     }
 
     buildTypes {
@@ -32,11 +45,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true

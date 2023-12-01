@@ -15,10 +15,10 @@ import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.Marker
 import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
+import nbt.party.o.matsosik.ui.map.MapScreen
 import nbt.party.o.matsosik.ui.theme.MatsosikTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalNaverMapApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -28,14 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NaverMap(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Marker(
-                            state = MarkerState(position = LatLng(37.532600, 127.024612)),
-                            captionText = "Marker in Seoul"
-                        )
-                    }
+                    MapScreen()
                 }
             }
         }

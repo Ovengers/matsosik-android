@@ -10,15 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.compose.ExperimentalNaverMapApi
-import com.naver.maps.map.compose.Marker
-import com.naver.maps.map.compose.MarkerState
-import com.naver.maps.map.compose.NaverMap
+import dagger.hilt.android.AndroidEntryPoint
+import nbt.party.o.matsosik.data.repo.MatsosikRepository
 import nbt.party.o.matsosik.ui.map.MapScreen
 import nbt.party.o.matsosik.ui.theme.MatsosikTheme
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var matsosikRepository: MatsosikRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

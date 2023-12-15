@@ -87,7 +87,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
 ## AndroidX
-android = ["androidx-core", "androidx-lifecycle-runtime", "androidx-activity-compose"]
+android = ["androidx-core", "androidx-lifecycle-runtime", "androidx-activity-compose", "androidx-navigation-compose"]
 ## Compose
 compose = ["compose-ui-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3"]
 ## NaverMap

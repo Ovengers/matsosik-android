@@ -1,12 +1,16 @@
 package nbt.party.o.matsosik.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -29,9 +33,20 @@ fun MatsosikApp() {
                 items.forEach { item ->
                     val isSelect = item == Screen.Map
                     NavigationBarItem(selected = isSelect,
-                        label = { Text(text = stringResource(id = item.resourceId)) },
+                        label = {
+                            Text(
+                                text = stringResource(id = item.resourceId),
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                        },
                         onClick = { },
-                        icon = { }
+                        icon = {
+                            Image(
+                                painter = painterResource(id = item.icon),
+                                contentDescription = item.route,
+                                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onSecondaryContainer)
+                            )
+                        }
                     )
 
                 }

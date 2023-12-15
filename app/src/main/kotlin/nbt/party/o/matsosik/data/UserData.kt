@@ -1,6 +1,8 @@
 package nbt.party.o.matsosik.data
 
 data class UserData(
-    val id: String,
-    val nickName: String
+    val email: String,
+    val name: String,
+    val nickName: String,
+    val profileImage: String
 )

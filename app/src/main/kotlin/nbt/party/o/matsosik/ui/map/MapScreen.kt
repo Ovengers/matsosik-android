@@ -17,6 +17,9 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import nbt.party.o.matsosik.data.RestaurantData
 
+private val defaultCameraPosition = LatLng(37.489972, 127.0051895)
+private const val DEFAULT_ZOOM = 15.0
+
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapScreen(
@@ -24,17 +27,14 @@ fun MapScreen(
     vm: MapViewModel = hiltViewModel()
 ) {
 
-    val seoul = LatLng(37.489972, 127.0051895)
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {
         // 카메라 초기 위치를 설정합니다.
-        position = CameraPosition(seoul, 15.0)
+        position = CameraPosition(defaultCameraPosition, DEFAULT_ZOOM)
     }
     NaverMap(
         modifier = modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState
     ) {
-
-
 
         val restaurants = vm.restaurants.collectAsState()
         restaurants.value.forEach { restaurantData: RestaurantData ->

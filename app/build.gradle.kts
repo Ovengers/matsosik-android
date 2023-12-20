@@ -76,7 +76,7 @@ dependencies {
     implementation(libs.bundles.compose)
 
     // Hilt
-    implementation(libs.hilt.android)
+    implementation(libs.bundles.hilt)
     kapt(libs.hilt.compiler)
 
     // NaverMap

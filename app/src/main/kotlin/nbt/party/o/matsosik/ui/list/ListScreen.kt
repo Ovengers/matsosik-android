@@ -13,19 +13,30 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import nbt.party.o.matsosik.data.RestaurantData
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
+import nbt.party.o.matsosik.ui.main.RestaurantViewModel
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
 
 @Composable
-fun RestaurantScreen(modifier: Modifier = Modifier) {
+fun RestaurantScreen(
+    modifier: Modifier = Modifier,
+    vm: RestaurantViewModel = hiltViewModel()
+) {
+    val restaurants = vm.restaurants.collectAsState()
+    RestaurantLazyColumn(
+        restaurants.value,
+        modifier
+    )
 }
 
 @Composable

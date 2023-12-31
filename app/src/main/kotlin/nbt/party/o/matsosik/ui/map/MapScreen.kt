@@ -16,6 +16,7 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 import nbt.party.o.matsosik.data.RestaurantData
+import nbt.party.o.matsosik.ui.main.RestaurantViewModel
 
 private val defaultCameraPosition = LatLng(37.489972, 127.0051895)
 private const val DEFAULT_ZOOM = 15.0
@@ -24,7 +25,7 @@ private const val DEFAULT_ZOOM = 15.0
 @Composable
 fun MapScreen(
     modifier: Modifier = Modifier,
-    vm: MapViewModel = hiltViewModel()
+    vm: RestaurantViewModel = hiltViewModel()
 ) {
 
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {

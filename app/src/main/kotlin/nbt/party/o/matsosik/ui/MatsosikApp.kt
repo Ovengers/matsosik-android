@@ -8,6 +8,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -16,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import nbt.party.o.matsosik.ui.list.RestaurantScreen
 import nbt.party.o.matsosik.ui.map.MapScreen
 
 private val items = listOf(
@@ -26,20 +29,24 @@ private val items = listOf(
 @Composable
 fun MatsosikApp() {
     val navController = rememberNavController()
+    val selectedRoute = remember { mutableStateOf(Screen.Map.route) }
     Scaffold(
         modifier = Modifier,
         bottomBar = {
             NavigationBar {
                 items.forEach { item ->
-                    val isSelect = item == Screen.Map
-                    NavigationBarItem(selected = isSelect,
+                    NavigationBarItem(
+                        selected = item.route == selectedRoute.value,
                         label = {
                             Text(
                                 text = stringResource(id = item.resourceId),
                                 style = MaterialTheme.typography.labelMedium
                             )
                         },
-                        onClick = { },
+                        onClick = {
+                            selectedRoute.value = item.route
+                            navController.navigate(item.route)
+                        },
                         icon = {
                             Image(
                                 painter = painterResource(id = item.icon),
@@ -72,6 +79,9 @@ fun MatsosikNavHost(
     ) {
         composable(route = Screen.Map.route) {
             MapScreen()
+        }
+        composable(route = Screen.List.route) {
+            RestaurantScreen()
         }
     }
 }

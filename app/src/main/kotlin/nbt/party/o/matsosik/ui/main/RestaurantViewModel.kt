@@ -1,4 +1,4 @@
-package nbt.party.o.matsosik.ui.map
+package nbt.party.o.matsosik.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +12,7 @@ import nbt.party.o.matsosik.data.repo.MatsosikRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class MapViewModel @Inject constructor(
+class RestaurantViewModel @Inject constructor(
     private val matsosikRepository: MatsosikRepository
 ) : ViewModel() {
 

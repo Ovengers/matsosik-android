@@ -5,13 +5,22 @@ import nbt.party.o.matsosik.data.RestaurantData
 
 class FakeMatsosikDataSource : MatsosikDataSource {
     private val mockRestaurants = listOf(
-        RestaurantData(0, "양포식당", "서울특별시 서초구 서초동 1502-5", 37.4894743, 127.0068655),
         RestaurantData(
-            1,
-            "샤오짠",
-            "아파트 서초구 상가 반포대로21길 27 서울특별시 화원그랑빌 1층 108호",
-            37.4870838,
-            127.0082748
+            187,
+            "샤브샤브 (롯데마트)",
+            "서울 서초구 서초대로38길 12 롯데마트 내",
+            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMTdfMjUz%2FMDAxNzAwMTkyNTYxNjUy.-FS-UOMm61Q8veLrEMIvQHVrgQzd9IxvbEQQEbNh50Ig.h5S23QDcFtY8hQWGHG2Um4sAUTRDA-oiX0Sq0tJLxM8g.JPEG.a_zum_koya%2F20231117%25A3%25DF114135.jpg&type=sc960_832",
+            37.4902536,
+            127.0061464
+        ),
+
+        RestaurantData(
+            188,
+            "우야 (장어덮밥)",
+            "서울특별시 서초구 서초대로42길 41 2층",
+            "https://d12zq4w4guyljn.cloudfront.net/750_750_20220929055414_photo2_OQsttOHxMH8D.jpg",
+            37.4902836,
+            127.0093969
         )
     )
 

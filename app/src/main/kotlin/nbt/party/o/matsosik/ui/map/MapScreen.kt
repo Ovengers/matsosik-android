@@ -45,7 +45,7 @@ fun MapScreen(
                         restaurantData.longitude
                     )
                 ),
-                captionText = restaurantData.name
+                captionText = restaurantData.displayName
             )
         }
     }

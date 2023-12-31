@@ -85,6 +85,9 @@ dependencies {
     // Timber
     implementation(libs.timber)
 
+    // Coil
+    implementation(libs.coil)
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

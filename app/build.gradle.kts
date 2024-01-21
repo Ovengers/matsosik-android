@@ -88,6 +88,10 @@ dependencies {
     // Coil
     implementation(libs.coil)
 
+    // Room
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

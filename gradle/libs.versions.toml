@@ -43,6 +43,9 @@ timber = "5.0.1"
 ## Coil
 coil = "2.5.0"
 
+## Room
+room = "2.5,0"
+
 [libraries]
 ## AndroidX
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
@@ -85,6 +88,9 @@ androidx-compose-ui-test-juint4 = { group = "androidx.compose.ui", name = "ui-te
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
+## Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

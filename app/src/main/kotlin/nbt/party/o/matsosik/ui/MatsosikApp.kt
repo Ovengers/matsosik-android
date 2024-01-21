@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -30,6 +31,9 @@ private val items = listOf(
 fun MatsosikApp() {
     val navController = rememberNavController()
     val selectedRoute = remember { mutableStateOf(Screen.Map.route) }
+
+
+
     Scaffold(
         modifier = Modifier,
         bottomBar = {
@@ -45,7 +49,19 @@ fun MatsosikApp() {
                         },
                         onClick = {
                             selectedRoute.value = item.route
-                            navController.navigate(item.route)
+                            navController.navigate(item.route) {
+
+                                // Graph Start
+                                navController.graph.startDestinationRoute?.let {
+                                    popUpTo(it) { saveState = true }
+                                }
+                                // Single Instance
+                                launchSingleTop = true
+
+                                // restoreState
+                                restoreState = true
+
+                            }
                         },
                         icon = {
                             Image(

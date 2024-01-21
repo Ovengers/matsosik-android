@@ -46,7 +46,10 @@ fun RestaurantLazyColumn(
 ) {
     LazyColumn(
         modifier = modifier
-            .padding(horizontal = 16.dp),
+            .padding(
+                horizontal = 16.dp,
+                vertical = 16.dp
+            ),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(restaurants) { item: RestaurantData ->

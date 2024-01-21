@@ -1,12 +1,17 @@
 package nbt.party.o.matsosik.ui.list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,10 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import nbt.party.o.matsosik.R
 import nbt.party.o.matsosik.data.RestaurantData
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
 import nbt.party.o.matsosik.ui.main.RestaurantViewModel
@@ -68,7 +76,9 @@ fun RestaurantItem(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .aspectRatio(16f / 9f)
+
     ) {
+
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
             model = item.thumbnail,
@@ -76,10 +86,39 @@ fun RestaurantItem(
             contentDescription = null,
         )
 
+        Row(
+            modifier = Modifier
+                .padding(
+                    start = 8.dp,
+                    top = 8.dp
+                )
+                .background(Color.Black.copy(alpha = 0.5f))
+                .padding(2.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val size = MaterialTheme.typography.labelSmall.fontSize.value.dp
+            Image(
+                modifier = Modifier.size(size),
+                painter = painterResource(id = R.drawable.ic_star_24dp),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(color = Color.Yellow)
+            )
+            Spacer(modifier = Modifier.size(2.dp))
+            Text(
+                modifier = Modifier,
+                text = "4.5",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.White
+            )
+        }
+
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(start = 8.dp, bottom = 8.dp)
+                .padding(
+                    start = 8.dp,
+                    bottom = 8.dp
+                )
         ) {
             Text(
                 modifier = Modifier

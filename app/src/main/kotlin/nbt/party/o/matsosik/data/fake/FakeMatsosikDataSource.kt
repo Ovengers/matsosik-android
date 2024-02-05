@@ -24,7 +24,20 @@ class FakeMatsosikDataSource : MatsosikDataSource {
         )
     )
 
+    private val mockRestaurant: RestaurantData = RestaurantData(
+        187,
+        "샤브샤브 (롯데마트)",
+        "서울 서초구 서초대로38길 12 롯데마트 내",
+        "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMTdfMjUz%2FMDAxNzAwMTkyNTYxNjUy.-FS-UOMm61Q8veLrEMIvQHVrgQzd9IxvbEQQEbNh50Ig.h5S23QDcFtY8hQWGHG2Um4sAUTRDA-oiX0Sq0tJLxM8g.JPEG.a_zum_koya%2F20231117%25A3%25DF114135.jpg&type=sc960_832",
+        37.4902536,
+        127.0061464
+    )
+
     override suspend fun getRestaurants(): List<RestaurantData> {
         return mockRestaurants
+    }
+
+    override suspend fun getRestaurant(restaurantId: Long): RestaurantData {
+        return mockRestaurant
     }
 }

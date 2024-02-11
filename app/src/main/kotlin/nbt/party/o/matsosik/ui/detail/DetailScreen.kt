@@ -64,6 +64,18 @@ fun DetailTitle(
     )
 }
 
+@Composable
+fun DetailAddress(
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        modifier = modifier,
+        text = title,
+        style = MaterialTheme.typography.titleMedium
+    )
+}
+
 @DarkLightModePreview
 @Composable
 fun DetailHeaderPreview() {
@@ -80,5 +92,14 @@ fun DetailTitlePreview() {
     SystemThemeSurface {
         val title = "우야(장어덮밥)"
         DetailTitle(title)
+    }
+}
+
+@DarkLightModePreview
+@Composable
+fun DetailAddressPreview() {
+    SystemThemeSurface {
+        val title = "서울특별시 서초구 서초대로42길 41 2층"
+        DetailAddress(title)
     }
 }

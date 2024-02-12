@@ -20,7 +20,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import nbt.party.o.matsosik.ui.detail.DetailScreen
 import nbt.party.o.matsosik.ui.list.RestaurantScreen
-import nbt.party.o.matsosik.ui.map.MapScreen
 
 private val items = listOf(
     Screen.Map,

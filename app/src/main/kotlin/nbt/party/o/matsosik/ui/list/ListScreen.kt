@@ -30,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import nbt.party.o.matsosik.R
 import nbt.party.o.matsosik.data.RestaurantData
+import nbt.party.o.matsosik.ui.common.RateStarImage
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
 import nbt.party.o.matsosik.ui.main.RestaurantViewModel
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
@@ -96,12 +97,7 @@ fun RestaurantItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val size = MaterialTheme.typography.labelSmall.fontSize.value.dp
-            Image(
-                modifier = Modifier.size(size),
-                painter = painterResource(id = R.drawable.ic_star_24dp),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(color = Color.Yellow)
-            )
+            RateStarImage(modifier = Modifier.size(size))
             Spacer(modifier = Modifier.size(2.dp))
             Text(
                 modifier = Modifier,

@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import nbt.party.o.matsosik.ui.detail.DetailScreen
 import nbt.party.o.matsosik.ui.list.RestaurantScreen
 import nbt.party.o.matsosik.ui.map.MapScreen
 
@@ -30,8 +31,6 @@ private val items = listOf(
 fun MatsosikApp() {
     val navController = rememberNavController()
     val selectedRoute = remember { mutableStateOf(Screen.Map.route) }
-
-
 
     Scaffold(
         modifier = Modifier,
@@ -93,7 +92,7 @@ fun MatsosikNavHost(
         startDestination = Screen.Map.route
     ) {
         composable(route = Screen.Map.route) {
-            MapScreen()
+            DetailScreen()
         }
         composable(route = Screen.List.route) {
             RestaurantScreen()

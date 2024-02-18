@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
 }
 
@@ -70,6 +71,9 @@ dependencies {
 
     // Android
     implementation(libs.bundles.android)
+
+    // Kotlinx Serialization Json
+    implementation(libs.kotlinx.serialization.json)
 
     // Compose
     implementation(platform(libs.compose.bom))

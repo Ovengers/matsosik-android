@@ -20,22 +20,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import nbt.party.o.matsosik.ui.detail.DetailScreen
 import nbt.party.o.matsosik.ui.list.RestaurantScreen
+import nbt.party.o.matsosik.ui.map.MapScreen
 
-private val items = listOf(
-    Screen.Map,
-    Screen.List
+private val bottomNavigationScreenItems = listOf(
+    BottomNavigationScreen.Map,
+    BottomNavigationScreen.List
 )
 
 @Composable
 fun MatsosikApp() {
     val navController = rememberNavController()
-    val selectedRoute = remember { mutableStateOf(Screen.Map.route) }
+    val selectedRoute = remember { mutableStateOf(BottomNavigationScreen.Map.route) }
 
     Scaffold(
         modifier = Modifier,
         bottomBar = {
             NavigationBar {
-                items.forEach { item ->
+                bottomNavigationScreenItems.forEach { item ->
                     NavigationBarItem(
                         selected = item.route == selectedRoute.value,
                         label = {
@@ -88,13 +89,16 @@ fun MatsosikNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screen.Map.route
+        startDestination = BottomNavigationScreen.Map.route
     ) {
-        composable(route = Screen.Map.route) {
-            DetailScreen()
+        composable(route = BottomNavigationScreen.Map.route) {
+            MapScreen()
         }
-        composable(route = Screen.List.route) {
+        composable(route = BottomNavigationScreen.List.route) {
             RestaurantScreen()
+        }
+        composable(route = Screen.Detail.route) {
+            DetailScreen()
         }
     }
 }

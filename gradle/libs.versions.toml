@@ -12,20 +12,20 @@ versionCode = "1"
 versionName = "1.0.0"
 
 ## Plugin
-androidGradlePlugin = "8.1.4"
-kotlin = "1.9.20"
+androidGradlePlugin = "8.2.2"
+kotlin = "1.9.22"
 
 ## Android
 androidxCore = "1.12.0"
-androidxLifeCycle = "2.6.2"
+androidxLifeCycle = "2.7.0"
 androidxActivityCompose = "1.8.2"
-androidxNavigation = "2.7.6"
+androidxNavigation = "2.7.7"
 
 ## Compose
-androidxComposeBom = "2023.10.01"
+androidxComposeBom = "2024.02.00"
 
 ## Hilt
-hilt = "2.48"
+hilt = "2.50"
 hiltNavigationCompose = "1.1.0"
 
 ## Test
@@ -35,7 +35,7 @@ androidxEspressoCore = "3.5.1"
 
 ## NaverMap
 naverMap = "3.17.0"
-naverMapCompose = "1.4.0"
+naverMapCompose = "1.6.0"
 
 ## Timber
 timber = "5.0.1"

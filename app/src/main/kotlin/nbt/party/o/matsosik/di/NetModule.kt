@@ -10,20 +10,21 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
+val applicationJsonContentType = "application/json".toMediaType()
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetModule {
 
     private const val BASE_URL = ""
-    private val contentType = "application/json".toMediaType()
+
 
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder().apply {
             baseUrl(BASE_URL)
-                .addConverterFactory(Json.asConverterFactory(contentType))
+                .addConverterFactory(Json.asConverterFactory(applicationJsonContentType))
         }.build()
     }
 }

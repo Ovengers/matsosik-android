@@ -92,6 +92,9 @@ dependencies {
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
 
+    // Retrofit2
+    implementation(libs.bundles.retrofit2)
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

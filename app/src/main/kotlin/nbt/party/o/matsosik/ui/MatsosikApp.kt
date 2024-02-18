@@ -8,18 +8,19 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import nbt.party.o.matsosik.ui.detail.DetailScreen
 import nbt.party.o.matsosik.ui.list.RestaurantScreen
+import nbt.party.o.matsosik.ui.main.AppViewModel
 import nbt.party.o.matsosik.ui.map.MapScreen
 
 private val bottomNavigationScreenItems = listOf(
@@ -28,9 +29,11 @@ private val bottomNavigationScreenItems = listOf(
 )
 
 @Composable
-fun MatsosikApp() {
+fun MatsosikApp(
+    vm: AppViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
-    val selectedRoute = remember { mutableStateOf(BottomNavigationScreen.Map.route) }
+    val selectedRoute = vm.selectNavigationRoute.collectAsState()
 
     Scaffold(
         modifier = Modifier,
@@ -46,7 +49,7 @@ fun MatsosikApp() {
                             )
                         },
                         onClick = {
-                            selectedRoute.value = item.route
+                            vm.changeSelectNavigationRoute(item.route)
                             navController.navigate(item.route) {
 
                                 // Graph Start

@@ -99,6 +99,9 @@ dependencies {
     // Retrofit2
     implementation(libs.bundles.retrofit2)
 
+    // OkHttp
+    implementation(libs.bundles.okhttp)
+
     // Unit Test
     testImplementation(libs.bundles.unit.test)
 

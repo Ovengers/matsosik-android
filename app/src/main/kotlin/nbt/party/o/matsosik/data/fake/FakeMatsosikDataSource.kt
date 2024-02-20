@@ -1,7 +1,9 @@
 package nbt.party.o.matsosik.data.fake
 
 import nbt.party.o.matsosik.data.MatsosikDataSource
+import nbt.party.o.matsosik.data.RequestReviewData
 import nbt.party.o.matsosik.data.RestaurantData
+import nbt.party.o.matsosik.data.ReviewData
 
 class FakeMatsosikDataSource : MatsosikDataSource {
     private val mockRestaurants = listOf(
@@ -39,5 +41,15 @@ class FakeMatsosikDataSource : MatsosikDataSource {
 
     override suspend fun getRestaurant(restaurantId: Long): RestaurantData {
         return mockRestaurant
+    }
+
+    override suspend fun createReview(requestReviewData: RequestReviewData): ReviewData {
+        return ReviewData(
+            title = "테스트 ",
+            content = "테스트 리뷰 내용",
+            score = 4,
+            uploadedImages = listOf(),
+            createdAt = "2024-02-18T20:59:45.387079"
+        )
     }
 }

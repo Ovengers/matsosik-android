@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
 }
 
@@ -57,7 +58,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.5.9"
     }
     packaging {
         resources {
@@ -70,6 +71,9 @@ dependencies {
 
     // Android
     implementation(libs.bundles.android)
+
+    // Kotlinx Serialization Json
+    implementation(libs.kotlinx.serialization.json)
 
     // Compose
     implementation(platform(libs.compose.bom))
@@ -91,6 +95,12 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
+
+    // Retrofit2
+    implementation(libs.bundles.retrofit2)
+
+    // OkHttp
+    implementation(libs.bundles.okhttp)
 
     // Unit Test
     testImplementation(libs.bundles.unit.test)

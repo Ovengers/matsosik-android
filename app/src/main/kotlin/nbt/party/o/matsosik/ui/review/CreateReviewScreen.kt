@@ -2,19 +2,24 @@ package nbt.party.o.matsosik.ui.review
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,9 +31,86 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import nbt.party.o.matsosik.R
+import nbt.party.o.matsosik.ui.common.RatingBar
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
+import nbt.party.o.matsosik.ui.common.VerticalSpacer
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
 
+
+@Composable
+fun CreateReviewScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 14.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        BottomSheetTopDivider()
+        VerticalSpacer(size = 16.dp)
+        Text(
+            text = "우야(장어덮밥)은 어떠셨나요?",
+            style = MaterialTheme.typography.titleLarge
+        )
+        VerticalSpacer(size = 8.dp)
+        RatingBar(
+            currentRating = 2f,
+            onRatingChanged = {},
+            size = 52.dp
+        )
+        VerticalSpacer(size = 24.dp)
+
+        VerticalScrollingOutlinedTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+                .defaultMinSize(minHeight = 150.dp)
+        )
+
+        VerticalSpacer(size = 24.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            val modifier = Modifier.weight(1f)
+            EmptyPicture(0, 5, modifier)
+            EmptyPicture(0, 5, modifier)
+            EmptyPicture(0, 5, modifier)
+            EmptyPicture(0, 5, modifier)
+        }
+
+        VerticalSpacer(size = 32.dp)
+
+        ElevatedButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp),
+            onClick = { /*TODO*/ }) {
+            Text(
+                text = "리뷰 쓰기",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+}
+
+@Composable
+fun BottomSheetTopDivider(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .width(60.dp)
+            .height(6.dp)
+            .background(
+                color = MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(size = 3.dp)
+            )
+    )
+}
 
 @Composable
 fun VerticalScrollingOutlinedTextField(
@@ -88,10 +170,16 @@ fun EmptyPicture(
 @Composable
 fun VerticalScrollingTextFieldPreview() {
     SystemThemeSurface {
-        VerticalScrollingOutlinedTextField(
-            "가나다라마바사\n도레미파솔", { _ -> },
-            Modifier.height(150.dp)
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(30.dp)
+        ) {
+            BottomSheetTopDivider(
+                Modifier.align(Alignment.Center)
+            )
+        }
+
     }
 }
 
@@ -108,5 +196,13 @@ fun EmptyPicturePreview() {
             EmptyPicture(0, 5, modifier)
         }
     }
+}
 
+@DarkLightModePreview
+@Composable
+fun CreateReviewScreenPreview() {
+    SystemThemeSurface {
+
+        CreateReviewScreen()
+    }
 }

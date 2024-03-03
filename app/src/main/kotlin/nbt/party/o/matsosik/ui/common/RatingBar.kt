@@ -41,7 +41,7 @@ fun RatingBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 0 until maxRating) {
-            val isSelected = i <= currentRating
+            val isSelected = i < currentRating
 
             val state = if (isSelected) StarState.FILL else StarState.EMPTY
             val starModifier = Modifier
@@ -80,6 +80,6 @@ fun RateStarImage(
 @Composable
 fun RatingBarPreview() {
     SystemThemeSurface {
-        RatingBar(currentRating = 3.4f, onRatingChanged = {})
+        RatingBar(currentRating = 1f, onRatingChanged = {})
     }
 }

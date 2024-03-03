@@ -25,8 +25,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import nbt.party.o.matsosik.R
 import nbt.party.o.matsosik.ui.common.RateStarImage
+import nbt.party.o.matsosik.ui.common.StarState
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
+import nbt.party.o.matsosik.ui.theme.rate_star_color
 
 
 @Composable
@@ -115,7 +117,7 @@ fun DetailReview(
             style = MaterialTheme.typography.labelLarge
         )
         Spacer(modifier = Modifier.width(4.dp))
-        RateStarImage()
+        RateStarImage(StarState.FILL, rate_star_color)
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             modifier = Modifier,

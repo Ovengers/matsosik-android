@@ -27,9 +27,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import nbt.party.o.matsosik.data.RestaurantData
 import nbt.party.o.matsosik.ui.common.RateStarImage
+import nbt.party.o.matsosik.ui.common.StarState
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
 import nbt.party.o.matsosik.ui.main.RestaurantViewModel
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
+import nbt.party.o.matsosik.ui.theme.rate_star_color
 
 @Composable
 fun RestaurantScreen(
@@ -93,7 +95,11 @@ fun RestaurantItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val size = MaterialTheme.typography.labelSmall.fontSize.value.dp
-            RateStarImage(modifier = Modifier.size(size))
+            RateStarImage(
+                starState = StarState.FILL,
+                color = rate_star_color,
+                modifier = Modifier.size(size)
+            )
             Spacer(modifier = Modifier.size(2.dp))
             Text(
                 modifier = Modifier,

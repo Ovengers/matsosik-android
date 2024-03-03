@@ -3,4 +3,9 @@
     <string name="map_name">지도</string>
     <string name="list_name">목록</string>
     <string name="back">뒤로 가기</string>
+
+
+    <!-- 리뷰 화면 String -->
+    <string name="picture_count">사진 %d/%d</string>
+
 </resources>

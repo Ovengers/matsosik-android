@@ -3,8 +3,7 @@ package nbt.party.o.matsosik.ui.common
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.runtime.Composable
@@ -51,8 +50,7 @@ fun RatingBar(
                         onRatingChanged(i.toFloat())
                     }
                 )
-                .width(size)
-                .height(size)
+                .size(size)
             RateStarImage(
                 starState = state,
                 color = rate_star_color,
@@ -80,6 +78,6 @@ fun RateStarImage(
 @Composable
 fun RatingBarPreview() {
     SystemThemeSurface {
-        RatingBar(currentRating = 1f, onRatingChanged = {})
+        RatingBar(currentRating = 3f, onRatingChanged = {})
     }
 }

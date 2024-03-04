@@ -24,12 +24,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import nbt.party.o.matsosik.R
 import nbt.party.o.matsosik.ui.common.RatingBar
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
@@ -38,7 +40,13 @@ import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
 
 
 @Composable
-fun CreateReviewScreen() {
+fun CreateReviewScreen(
+    vm: CreateReviewViewModel = hiltViewModel()
+) {
+    val title = vm.title.collectAsState()
+    val content = vm.content.collectAsState()
+    val rating = vm.rating.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,20 +57,24 @@ fun CreateReviewScreen() {
         BottomSheetTopDivider()
         VerticalSpacer(size = 16.dp)
         Text(
-            text = "우야(장어덮밥)은 어떠셨나요?",
+            text = title.value,
             style = MaterialTheme.typography.titleLarge
         )
         VerticalSpacer(size = 8.dp)
         RatingBar(
-            currentRating = 2f,
-            onRatingChanged = {},
+            currentRating = rating.value,
+            onRatingChanged = { rating: Float ->
+                vm.onRatingChanged(rating)
+            },
             size = 52.dp
         )
         VerticalSpacer(size = 24.dp)
 
         VerticalScrollingOutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = content.value,
+            onValueChange = { value: String ->
+                vm.onContentValueChanged(value)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
@@ -195,14 +207,5 @@ fun EmptyPicturePreview() {
             EmptyPicture(0, 5, modifier)
             EmptyPicture(0, 5, modifier)
         }
-    }
-}
-
-@DarkLightModePreview
-@Composable
-fun CreateReviewScreenPreview() {
-    SystemThemeSurface {
-
-        CreateReviewScreen()
     }
 }

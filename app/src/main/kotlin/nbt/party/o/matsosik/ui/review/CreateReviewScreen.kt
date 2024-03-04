@@ -1,5 +1,8 @@
 package nbt.party.o.matsosik.ui.review
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,6 +42,8 @@ import nbt.party.o.matsosik.ui.common.VerticalSpacer
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
 
 
+private const val CONTRACT_CONTENT_TYPE = "image/*"
+
 @Composable
 fun CreateReviewScreen(
     vm: CreateReviewViewModel = hiltViewModel()
@@ -46,6 +51,13 @@ fun CreateReviewScreen(
     val title = vm.title.collectAsState()
     val content = vm.content.collectAsState()
     val rating = vm.rating.collectAsState()
+
+    // 갤러리 Call ActivityResult
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { notNullUri: Uri -> vm.addImage(notNullUri) }
+    }
 
     Column(
         modifier = Modifier

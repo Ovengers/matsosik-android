@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import nbt.party.o.matsosik.R
 import nbt.party.o.matsosik.ui.common.RatingBar
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
@@ -51,6 +53,7 @@ fun CreateReviewScreen(
     val title = vm.title.collectAsState()
     val content = vm.content.collectAsState()
     val rating = vm.rating.collectAsState()
+    val imageList = vm.imageList.collectAsState()
 
     // 갤러리 Call ActivityResult
     val galleryLauncher = rememberLauncherForActivityResult(
@@ -94,16 +97,20 @@ fun CreateReviewScreen(
         )
 
         VerticalSpacer(size = 24.dp)
+
+        val imageRowScrollState = rememberScrollState()
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
+                .horizontalScroll(imageRowScrollState)
         ) {
-            val modifier = Modifier.weight(1f)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
+            EmptyPicture(0, 5) {
+                galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
+            }
+            imageList.value.forEach { uri: Uri ->
+                SelectPicture(uri = uri)
+            }
         }
 
         VerticalSpacer(size = 32.dp)
@@ -163,13 +170,13 @@ fun EmptyPicture(
         modifier = modifier
             .clickable { onClick?.invoke() }
             .padding(4.dp)
-            .aspectRatio(1f)
             .border(
                 BorderStroke(
                     1.dp,
                     MaterialTheme.colorScheme.secondary
                 ), RoundedCornerShape(8.dp)
-            ),
+            )
+            .size(100.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -186,6 +193,31 @@ fun EmptyPicture(
             text = pictureFormatString,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+@Composable
+fun SelectPicture(
+    uri: Uri,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .padding(4.dp)
+            .border(
+                BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.secondary
+                ), RoundedCornerShape(8.dp)
+            )
+            .size(100.dp)
+    ) {
+        AsyncImage(
+            model = uri,
+            modifier = Modifier.size(52.dp),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
+            contentDescription = null
         )
     }
 }
@@ -213,11 +245,10 @@ fun EmptyPicturePreview() {
     SystemThemeSurface {
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            val modifier = Modifier.weight(1f)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
+            EmptyPicture(0, 5)
+            EmptyPicture(0, 5)
+            EmptyPicture(0, 5)
+            EmptyPicture(0, 5)
         }
     }
 }

@@ -56,6 +56,8 @@ fun CreateReviewScreen(
     val content = vm.content.collectAsState()
     val rating = vm.rating.collectAsState()
     val imageList = vm.imageList.collectAsState()
+    val currentImageCount = vm.currentImageSize
+    val maxImageCount = vm.maxImageSize
 
     // 갤러리 Call ActivityResult
     val galleryLauncher = rememberLauncherForActivityResult(
@@ -106,7 +108,8 @@ fun CreateReviewScreen(
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                EmptyPicture(0, 5) {
+                EmptyPicture(currentImageCount, maxImageCount) {
+                    // TODO : Event 로 변경 필요
                     galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
                 }
             }

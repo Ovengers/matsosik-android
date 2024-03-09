@@ -23,6 +23,8 @@ class CreateReviewViewModel @Inject constructor() : ViewModel() {
     private val _imageList: MutableStateFlow<List<Uri>> = MutableStateFlow(mutableListOf())
     val imageList: StateFlow<List<Uri>> get() = _imageList.asStateFlow()
 
+    val currentImageSize get() = imageList.value.size
+    val maxImageSize = MAX_IMAGE_SIZE
 
     fun onRatingChanged(rating: Float) {
         _rating.value = rating
@@ -34,5 +36,9 @@ class CreateReviewViewModel @Inject constructor() : ViewModel() {
 
     fun addImage(uri: Uri) {
         _imageList.value += uri
+    }
+
+    companion object {
+        private const val MAX_IMAGE_SIZE = 5
     }
 }

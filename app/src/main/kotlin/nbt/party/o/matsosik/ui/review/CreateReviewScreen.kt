@@ -1,5 +1,9 @@
 package nbt.party.o.matsosik.ui.review
 
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,13 +13,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,12 +30,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import nbt.party.o.matsosik.R
 import nbt.party.o.matsosik.ui.common.RatingBar
 import nbt.party.o.matsosik.ui.common.SystemThemeSurface
@@ -37,8 +49,41 @@ import nbt.party.o.matsosik.ui.common.VerticalSpacer
 import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
 
 
+private const val CONTRACT_CONTENT_TYPE = "image/*"
+
 @Composable
-fun CreateReviewScreen() {
+fun CreateReviewScreen(
+    vm: CreateReviewViewModel = hiltViewModel()
+) {
+    val title = vm.title.collectAsState()
+    val content = vm.content.collectAsState()
+    val rating = vm.rating.collectAsState()
+    val imageList = vm.imageList.collectAsState()
+    val currentImageCount = vm.currentImageCount.collectAsState()
+    val maxImageCount = vm.maxImageSize
+
+    // 갤러리 Call ActivityResult
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { notNullUri: Uri -> vm.addImage(notNullUri) }
+    }
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = vm.event) {
+        vm.event.collect { event: CreateReviewViewModel.CreateReviewEvent ->
+            when (event) {
+                CreateReviewViewModel.CreateReviewEvent.LaunchGallery ->
+                    galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
+
+                is CreateReviewViewModel.CreateReviewEvent.ShowDialog ->
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,20 +94,24 @@ fun CreateReviewScreen() {
         BottomSheetTopDivider()
         VerticalSpacer(size = 16.dp)
         Text(
-            text = "우야(장어덮밥)은 어떠셨나요?",
+            text = title.value,
             style = MaterialTheme.typography.titleLarge
         )
         VerticalSpacer(size = 8.dp)
         RatingBar(
-            currentRating = 2f,
-            onRatingChanged = {},
+            currentRating = rating.value,
+            onRatingChanged = { rating: Float ->
+                vm.onRatingChanged(rating)
+            },
             size = 52.dp
         )
         VerticalSpacer(size = 24.dp)
 
         VerticalScrollingOutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = content.value,
+            onValueChange = { value: String ->
+                vm.onContentValueChanged(value)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
@@ -70,16 +119,21 @@ fun CreateReviewScreen() {
         )
 
         VerticalSpacer(size = 24.dp)
-        Row(
+
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         ) {
-            val modifier = Modifier.weight(1f)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
+            item {
+                EmptyImage(currentImageCount.value, maxImageCount) {
+                    vm.onLaunchGallery()
+                }
+            }
+
+            items(imageList.value) { uri: Uri ->
+                SelectImage(uri = uri)
+            }
         }
 
         VerticalSpacer(size = 32.dp)
@@ -129,9 +183,9 @@ fun VerticalScrollingOutlinedTextField(
 }
 
 @Composable
-fun EmptyPicture(
-    currentPictureCount: Int,
-    maxPictureCount: Int,
+fun EmptyImage(
+    currentImageCount: Int,
+    maxImageCount: Int,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null
 ) {
@@ -139,13 +193,13 @@ fun EmptyPicture(
         modifier = modifier
             .clickable { onClick?.invoke() }
             .padding(4.dp)
-            .aspectRatio(1f)
             .border(
                 BorderStroke(
                     1.dp,
                     MaterialTheme.colorScheme.secondary
                 ), RoundedCornerShape(8.dp)
-            ),
+            )
+            .size(100.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -157,11 +211,36 @@ fun EmptyPicture(
         )
 
         val pictureFormatString =
-            stringResource(id = R.string.picture_count, currentPictureCount, maxPictureCount)
+            stringResource(id = R.string.picture_count, currentImageCount, maxImageCount)
         Text(
             text = pictureFormatString,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+@Composable
+fun SelectImage(
+    uri: Uri,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .padding(4.dp)
+            .border(
+                BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.secondary
+                ), RoundedCornerShape(8.dp)
+            )
+            .size(100.dp)
+    ) {
+        AsyncImage(
+            model = uri,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
         )
     }
 }
@@ -189,20 +268,10 @@ fun EmptyPicturePreview() {
     SystemThemeSurface {
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            val modifier = Modifier.weight(1f)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
-            EmptyPicture(0, 5, modifier)
+            EmptyImage(0, 5)
+            EmptyImage(0, 5)
+            EmptyImage(0, 5)
+            EmptyImage(0, 5)
         }
-    }
-}
-
-@DarkLightModePreview
-@Composable
-fun CreateReviewScreenPreview() {
-    SystemThemeSurface {
-
-        CreateReviewScreen()
     }
 }

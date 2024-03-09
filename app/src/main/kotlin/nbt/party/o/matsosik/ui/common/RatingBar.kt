@@ -39,8 +39,8 @@ fun RatingBar(
         modifier = modifier.selectableGroup(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        for (i in 0 until maxRating) {
-            val isSelected = i < currentRating
+        for (i in 1 .. maxRating) {
+            val isSelected = i <= currentRating
 
             val state = if (isSelected) StarState.FILL else StarState.EMPTY
             val starModifier = Modifier

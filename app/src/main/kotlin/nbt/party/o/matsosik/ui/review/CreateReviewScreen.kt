@@ -108,14 +108,14 @@ fun CreateReviewScreen(
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                EmptyPicture(currentImageCount, maxImageCount) {
+                EmptyImage(currentImageCount, maxImageCount) {
                     // TODO : Event 로 변경 필요
                     galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
                 }
             }
 
             items(imageList.value) { uri: Uri ->
-                SelectPicture(uri = uri)
+                SelectImage(uri = uri)
             }
         }
 
@@ -166,9 +166,9 @@ fun VerticalScrollingOutlinedTextField(
 }
 
 @Composable
-fun EmptyPicture(
-    currentPictureCount: Int,
-    maxPictureCount: Int,
+fun EmptyImage(
+    currentImageCount: Int,
+    maxImageCount: Int,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null
 ) {
@@ -194,7 +194,7 @@ fun EmptyPicture(
         )
 
         val pictureFormatString =
-            stringResource(id = R.string.picture_count, currentPictureCount, maxPictureCount)
+            stringResource(id = R.string.picture_count, currentImageCount, maxImageCount)
         Text(
             text = pictureFormatString,
             style = MaterialTheme.typography.titleSmall,
@@ -204,7 +204,7 @@ fun EmptyPicture(
 }
 
 @Composable
-fun SelectPicture(
+fun SelectImage(
     uri: Uri,
     modifier: Modifier = Modifier
 ) {
@@ -251,10 +251,10 @@ fun EmptyPicturePreview() {
     SystemThemeSurface {
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            EmptyPicture(0, 5)
-            EmptyPicture(0, 5)
-            EmptyPicture(0, 5)
-            EmptyPicture(0, 5)
+            EmptyImage(0, 5)
+            EmptyImage(0, 5)
+            EmptyImage(0, 5)
+            EmptyImage(0, 5)
         }
     }
 }

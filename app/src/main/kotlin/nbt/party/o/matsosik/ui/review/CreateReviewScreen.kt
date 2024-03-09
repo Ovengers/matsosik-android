@@ -8,18 +8,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -32,6 +33,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -98,17 +100,18 @@ fun CreateReviewScreen(
 
         VerticalSpacer(size = 24.dp)
 
-        val imageRowScrollState = rememberScrollState()
-        Row(
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .horizontalScroll(imageRowScrollState)
         ) {
-            EmptyPicture(0, 5) {
-                galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
+            item {
+                EmptyPicture(0, 5) {
+                    galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
+                }
             }
-            imageList.value.forEach { uri: Uri ->
+
+            items(imageList.value) { uri: Uri ->
                 SelectPicture(uri = uri)
             }
         }
@@ -215,8 +218,8 @@ fun SelectPicture(
     ) {
         AsyncImage(
             model = uri,
-            modifier = Modifier.size(52.dp),
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
             contentDescription = null
         )
     }

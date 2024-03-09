@@ -20,8 +20,8 @@ class CreateReviewViewModel @Inject constructor() : ViewModel() {
     private val _rating: MutableStateFlow<Float> = MutableStateFlow(0f)
     val rating: StateFlow<Float> get() = _rating
 
-    private val _imageList: MutableStateFlow<MutableList<Uri>> = MutableStateFlow(mutableListOf())
-    val imageList: StateFlow<MutableList<Uri>> get() = _imageList.asStateFlow()
+    private val _imageList: MutableStateFlow<List<Uri>> = MutableStateFlow(mutableListOf())
+    val imageList: StateFlow<List<Uri>> get() = _imageList.asStateFlow()
 
 
     fun onRatingChanged(rating: Float) {
@@ -33,6 +33,6 @@ class CreateReviewViewModel @Inject constructor() : ViewModel() {
     }
 
     fun addImage(uri: Uri) {
-        _imageList.value.add(uri)
+        _imageList.value += uri
     }
 }

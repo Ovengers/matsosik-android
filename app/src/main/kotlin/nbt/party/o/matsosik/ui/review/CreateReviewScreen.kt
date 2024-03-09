@@ -25,10 +25,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -50,6 +54,28 @@ import nbt.party.o.matsosik.ui.preview.DarkLightModePreview
 
 
 private const val CONTRACT_CONTENT_TYPE = "image/*"
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CreateReviewBottomSheet(
+    showBottomSheet: Boolean,
+    onDismiss: (() -> Unit),
+    modifier: Modifier = Modifier
+) {
+    val modalBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    if (showBottomSheet)
+        ModalBottomSheet(
+            modifier = modifier,
+            onDismissRequest = onDismiss,
+            sheetState = modalBottomSheetState,
+            dragHandle = { BottomSheetDefaults.DragHandle() }
+        ) {
+            CreateReviewScreen()
+        }
+}
 
 @Composable
 fun CreateReviewScreen(
@@ -83,15 +109,14 @@ fun CreateReviewScreen(
     }
 
 
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 14.dp),
+            .padding(vertical = 14.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        BottomSheetTopDivider()
         VerticalSpacer(size = 16.dp)
         Text(
             text = title.value,
@@ -138,7 +163,7 @@ fun CreateReviewScreen(
 
         VerticalSpacer(size = 32.dp)
 
-        ElevatedButton(
+        OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
@@ -148,6 +173,7 @@ fun CreateReviewScreen(
                 style = MaterialTheme.typography.titleMedium
             )
         }
+        VerticalSpacer(size = 32.dp)
     }
 }
 

@@ -1,6 +1,7 @@
 package nbt.party.o.matsosik.ui.review
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -29,11 +30,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -56,7 +59,7 @@ fun CreateReviewScreen(
     val content = vm.content.collectAsState()
     val rating = vm.rating.collectAsState()
     val imageList = vm.imageList.collectAsState()
-    val currentImageCount = vm.currentImageSize
+    val currentImageCount = vm.currentImageCount.collectAsState()
     val maxImageCount = vm.maxImageSize
 
     // 갤러리 Call ActivityResult
@@ -65,6 +68,21 @@ fun CreateReviewScreen(
     ) { uri: Uri? ->
         uri?.let { notNullUri: Uri -> vm.addImage(notNullUri) }
     }
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = vm.event) {
+        vm.event.collect { event: CreateReviewViewModel.CreateReviewEvent ->
+            when (event) {
+                CreateReviewViewModel.CreateReviewEvent.LaunchGallery ->
+                    galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
+
+                is CreateReviewViewModel.CreateReviewEvent.ShowDialog ->
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
 
     Column(
         modifier = Modifier
@@ -108,9 +126,8 @@ fun CreateReviewScreen(
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                EmptyImage(currentImageCount, maxImageCount) {
-                    // TODO : Event 로 변경 필요
-                    galleryLauncher.launch(CONTRACT_CONTENT_TYPE)
+                EmptyImage(currentImageCount.value, maxImageCount) {
+                    vm.onLaunchGallery()
                 }
             }
 

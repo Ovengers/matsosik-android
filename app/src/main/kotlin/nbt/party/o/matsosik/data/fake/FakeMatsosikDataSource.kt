@@ -1,5 +1,6 @@
 package nbt.party.o.matsosik.data.fake
 
+import android.net.Uri
 import nbt.party.o.matsosik.data.MatsosikDataSource
 import nbt.party.o.matsosik.data.RequestReviewData
 import nbt.party.o.matsosik.data.RestaurantData
@@ -43,7 +44,10 @@ class FakeMatsosikDataSource : MatsosikDataSource {
         return mockRestaurant
     }
 
-    override suspend fun createReview(requestReviewData: RequestReviewData): ReviewData {
+    override suspend fun createReview(
+        images: List<Uri>,
+        requestReviewData: RequestReviewData
+    ): ReviewData {
         return ReviewData(
             title = "테스트 ",
             content = "테스트 리뷰 내용",

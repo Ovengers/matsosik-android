@@ -5,24 +5,23 @@ import nbt.party.o.matsosik.data.MatsosikDataSource
 import nbt.party.o.matsosik.data.RequestReviewData
 import nbt.party.o.matsosik.data.RestaurantData
 import nbt.party.o.matsosik.data.ReviewData
-import nbt.party.o.matsosik.di.RemoteMatsosikDataSource
 
-class MatsosikRepositoryImpl(
-    @RemoteMatsosikDataSource
+class MatsosikFakeRepositoryImpl(
     private val matsosikDataSource: MatsosikDataSource
 ) : MatsosikRepository {
     override suspend fun getRestaurants(): List<RestaurantData> {
-        TODO("Not yet implemented")
+        return matsosikDataSource.getRestaurants()
     }
 
     override suspend fun getRestaurant(restaurantId: Long): RestaurantData {
-        TODO("Not yet implemented")
+        return matsosikDataSource.getRestaurant(restaurantId)
     }
 
     override suspend fun createReview(
         images: List<Uri>,
         requestReviewData: RequestReviewData
     ): ReviewData {
-        return matsosikDataSource.createReview(images, requestReviewData)
+        TODO("Not yet implemented")
     }
+
 }

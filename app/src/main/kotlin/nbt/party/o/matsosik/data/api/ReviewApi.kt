@@ -1,5 +1,6 @@
 package nbt.party.o.matsosik.data.api
 
+import nbt.party.o.matsosik.data.ReviewData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Multipart
@@ -12,8 +13,8 @@ interface ReviewApi {
     @POST("/api/v1/reviews")
     suspend fun createReview(
         @Part
-        reviewImages: List<MultipartBody.Part>?,
+        reviewImages: List<MultipartBody.Part?>,
         @PartMap
-        requestReview: HashMap<String, RequestBody>
-    )
+        requestReview: Map<String, RequestBody>
+    ): ReviewData
 }

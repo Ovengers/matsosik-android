@@ -11,10 +11,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import nbt.party.o.matsosik.data.RequestReviewData
+import nbt.party.o.matsosik.data.repo.MatsosikRepository
+import nbt.party.o.matsosik.di.RealMatsosikRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateReviewViewModel @Inject constructor() : ViewModel() {
+class CreateReviewViewModel @Inject constructor(
+    @RealMatsosikRepository
+    private val matsosikRepository: MatsosikRepository
+) : ViewModel() {
 
     private val _title: MutableStateFlow<String> = MutableStateFlow("")
     val title: StateFlow<String> get() = _title.asStateFlow()
@@ -70,6 +76,20 @@ class CreateReviewViewModel @Inject constructor() : ViewModel() {
             return@launch
         }
         _event.emit(CreateReviewEvent.LaunchGallery)
+    }
+
+    fun onCreateReview(
+        images:List<Uri>,
+        content: String,
+        score: Int,
+        restaurantId: Int
+    ) {
+        viewModelScope.launch {
+            val requestReviewData = RequestReviewData(
+                content, score, restaurantId
+            )
+            matsosikRepository.createReview(images, requestReviewData)
+        }
     }
 
     companion object {

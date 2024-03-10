@@ -173,7 +173,14 @@ fun CreateReviewScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
-            onClick = { /*TODO*/ }) {
+            onClick = {
+                vm.onCreateReview(
+                    imageList.value,
+                    content.value,
+                    rating.value.toInt(),
+                    1000 // TODO : RestaurantId 로 변경
+                )
+            }) {
             Text(
                 text = "리뷰 쓰기",
                 style = MaterialTheme.typography.titleMedium

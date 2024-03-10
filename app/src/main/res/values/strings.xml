@@ -7,5 +7,6 @@
 
     <!-- 리뷰 화면 String -->
     <string name="picture_count">사진 %d/%d</string>
+    <string name="remove_picture_content_description">사진 삭제</string>
 
 </resources>

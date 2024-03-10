@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
@@ -38,12 +39,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import nbt.party.o.matsosik.R
@@ -112,8 +116,7 @@ fun CreateReviewScreen(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 14.dp)
-            .verticalScroll(rememberScrollState()),
+            .padding(vertical = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -157,7 +160,10 @@ fun CreateReviewScreen(
             }
 
             items(imageList.value) { uri: Uri ->
-                SelectImage(uri = uri)
+                SelectImage(
+                    uri = uri,
+                    onRemoveClick = { removeUri: Uri -> vm.removeImage(removeUri) }
+                )
             }
         }
 
@@ -249,6 +255,7 @@ fun EmptyImage(
 @Composable
 fun SelectImage(
     uri: Uri,
+    onRemoveClick: ((uri: Uri) -> Unit),
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -257,16 +264,33 @@ fun SelectImage(
             .border(
                 BorderStroke(
                     1.dp,
-                    MaterialTheme.colorScheme.secondary
+                    MaterialTheme.colorScheme.inverseSurface
                 ), RoundedCornerShape(8.dp)
             )
             .size(100.dp)
     ) {
         AsyncImage(
             model = uri,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop,
             contentDescription = null
+        )
+        Image(
+            modifier = Modifier
+                .clickable { onRemoveClick.invoke(uri) }
+                .align(Alignment.TopEnd)
+                .padding(4.dp)
+                .background(
+                    color = Color.White,
+                    shape = CircleShape
+                ),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
+            painter = painterResource(id = R.drawable.ic_cancel_fill_24dp),
+            contentDescription = stringResource(
+                id = R.string.remove_picture_content_description
+            )
         )
     }
 }
@@ -298,6 +322,17 @@ fun EmptyPicturePreview() {
             EmptyImage(0, 5)
             EmptyImage(0, 5)
             EmptyImage(0, 5)
+        }
+    }
+}
+
+@DarkLightModePreview
+@Composable
+fun SelectImagePreview() {
+    SystemThemeSurface {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            SelectImage(uri = "".toUri(), {})
+            SelectImage(uri = "".toUri(), {})
         }
     }
 }

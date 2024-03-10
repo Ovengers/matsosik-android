@@ -11,7 +11,7 @@ import nbt.party.o.matsosik.data.api.ReviewApi
 import nbt.party.o.matsosik.data.fake.FakeMatsosikDataSource
 import nbt.party.o.matsosik.data.remote.MatsosikDataSourceImpl
 import nbt.party.o.matsosik.data.repo.MatsosikRepository
-import nbt.party.o.matsosik.data.repo.MatsosikRepositoryImpl
+import nbt.party.o.matsosik.data.repo.MatsosikFakeRepositoryImpl
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -36,18 +36,23 @@ object MatsosikModule {
         return MatsosikDataSourceImpl(context, reviewApi)
     }
 
+    @FakeMatsosikRepository
     @Provides
     @Singleton
-    fun provideMatsosikRepository(
+    fun provideMatsosikFakeRepository(
         @FakeMatsosik matsosikDataSource: MatsosikDataSource
     ): MatsosikRepository {
-        return MatsosikRepositoryImpl(matsosikDataSource)
+        return MatsosikFakeRepositoryImpl(matsosikDataSource)
     }
 }
 
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class FakeMatsosik
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class FakeMatsosikRepository
 
 @Retention(AnnotationRetention.BINARY)
 @Qualifier

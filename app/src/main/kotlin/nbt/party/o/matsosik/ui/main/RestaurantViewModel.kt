@@ -9,11 +9,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbt.party.o.matsosik.data.RestaurantData
 import nbt.party.o.matsosik.data.repo.MatsosikRepository
+import nbt.party.o.matsosik.di.FakeMatsosikRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class RestaurantViewModel @Inject constructor(
-    private val matsosikRepository: MatsosikRepository
+    @FakeMatsosikRepository private val matsosikRepository: MatsosikRepository
 ) : ViewModel() {
 
     private val _restaurants: MutableStateFlow<List<RestaurantData>> =

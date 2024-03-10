@@ -12,6 +12,7 @@ import nbt.party.o.matsosik.data.fake.FakeMatsosikDataSource
 import nbt.party.o.matsosik.data.remote.MatsosikDataSourceImpl
 import nbt.party.o.matsosik.data.repo.MatsosikRepository
 import nbt.party.o.matsosik.data.repo.MatsosikFakeRepositoryImpl
+import nbt.party.o.matsosik.data.repo.MatsosikRepositoryImpl
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -39,10 +40,19 @@ object MatsosikModule {
     @FakeMatsosikRepository
     @Provides
     @Singleton
-    fun provideMatsosikFakeRepository(
+    fun provideFakeMatsosikRepository(
         @FakeMatsosik matsosikDataSource: MatsosikDataSource
     ): MatsosikRepository {
         return MatsosikFakeRepositoryImpl(matsosikDataSource)
+    }
+
+    @RealMatsosikRepository
+    @Provides
+    @Singleton
+    fun provideMatsosikRepository(
+        @RemoteMatsosikDataSource matsosikDataSource: MatsosikDataSource
+    ): MatsosikRepository {
+        return MatsosikRepositoryImpl(matsosikDataSource)
     }
 }
 
@@ -57,3 +67,7 @@ annotation class FakeMatsosikRepository
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class RemoteMatsosikDataSource
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class RealMatsosikRepository

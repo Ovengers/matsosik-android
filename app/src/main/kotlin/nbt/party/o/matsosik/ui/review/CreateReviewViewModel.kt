@@ -60,6 +60,10 @@ class CreateReviewViewModel @Inject constructor() : ViewModel() {
         _imageList.value += uri
     }
 
+    fun removeImage(uri: Uri) {
+        _imageList.value -= uri
+    }
+
     fun onLaunchGallery() = viewModelScope.launch {
         if (_imageList.value.size >= MAX_IMAGE_SIZE) {
             _event.emit(CreateReviewEvent.ShowDialog("5개 이상 추가 할 수 없습니다."))

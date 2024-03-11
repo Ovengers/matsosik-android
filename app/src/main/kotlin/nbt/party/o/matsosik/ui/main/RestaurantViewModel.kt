@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RestaurantViewModel @Inject constructor(
-    @FakeMatsosikRepository private val matsosikRepository: MatsosikRepository
+    @FakeMatsosikRepository
+    private val matsosikRepository: MatsosikRepository
 ) : ViewModel() {
 
     private val _restaurants: MutableStateFlow<List<RestaurantData>> =

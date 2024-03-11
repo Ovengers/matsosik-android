@@ -1,6 +1,7 @@
 package nbt.party.o.matsosik.ui.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,7 @@ import nbt.party.o.matsosik.ui.theme.rate_star_color
 @Composable
 fun RestaurantScreen(
     modifier: Modifier = Modifier,
-    vm: RestaurantViewModel = hiltViewModel()
+    vm: RestaurantViewModel = hiltViewModel(),
 ) {
     val restaurants = vm.restaurants.collectAsState()
     RestaurantLazyColumn(
@@ -48,7 +49,8 @@ fun RestaurantScreen(
 @Composable
 fun RestaurantLazyColumn(
     restaurants: List<RestaurantData>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRestaurantClick: ((RestaurantData) -> Unit)? = null
 ) {
     LazyColumn(
         modifier = modifier
@@ -68,10 +70,12 @@ fun RestaurantLazyColumn(
 @Composable
 fun RestaurantItem(
     item: RestaurantData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRestaurantClick: ((RestaurantData) -> Unit)? = null
 ) {
     Box(
         modifier = modifier
+            .clickable { onRestaurantClick?.invoke(item) }
             .clip(RoundedCornerShape(8.dp))
             .aspectRatio(16f / 9f)
 

@@ -12,7 +12,7 @@ class MatsosikRepositoryImpl(
     private val matsosikDataSource: MatsosikDataSource
 ) : MatsosikRepository {
     override suspend fun getRestaurants(): List<RestaurantData> {
-        TODO("Not yet implemented")
+        return matsosikDataSource.getRestaurants()
     }
 
     override suspend fun getRestaurant(restaurantId: Long): RestaurantData {

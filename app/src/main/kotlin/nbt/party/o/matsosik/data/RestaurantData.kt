@@ -1,8 +1,16 @@
 package nbt.party.o.matsosik.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ResponseRestaurantData(
+    val restaurants: List<RestaurantData>
+)
+
 /**
  * 음식점 정보 Data Class
  */
+@Serializable
 data class RestaurantData(
     val id: Long,               // 음식점 ID
     val displayName: String,    // 음식점 이름

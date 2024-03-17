@@ -16,7 +16,7 @@ val applicationJsonContentType = "application/json".toMediaType()
 @InstallIn(SingletonComponent::class)
 object NetModule {
 
-    private const val BASE_URL = ""
+    private const val BASE_URL = "http://52.79.125.14:8080/"
 
 
     @Provides

@@ -3,18 +3,20 @@ package nbt.party.o.matsosik.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nbt.party.o.matsosik.data.RestaurantData
 import nbt.party.o.matsosik.data.repo.MatsosikRepository
-import nbt.party.o.matsosik.di.FakeMatsosikRepository
+import nbt.party.o.matsosik.di.RealMatsosikRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class RestaurantViewModel @Inject constructor(
-    @FakeMatsosikRepository private val matsosikRepository: MatsosikRepository
+    @RealMatsosikRepository private val matsosikRepository: MatsosikRepository
 ) : ViewModel() {
 
     private val _restaurants: MutableStateFlow<List<RestaurantData>> =
@@ -28,8 +30,12 @@ class RestaurantViewModel @Inject constructor(
 
     private fun fetchRestaurants() {
         viewModelScope.launch {
-            val restaurants = matsosikRepository.getRestaurants()
-            _restaurants.emit(restaurants)
+            runCatching {
+                val restaurants = matsosikRepository.getRestaurants()
+                _restaurants.emit(restaurants)
+            }.onFailure { throwable: Throwable ->
+                Timber.e(throwable)
+            }
         }
     }
 }

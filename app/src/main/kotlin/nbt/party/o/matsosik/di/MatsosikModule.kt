@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import nbt.party.o.matsosik.data.MatsosikDataSource
+import nbt.party.o.matsosik.data.api.RestaurantApi
 import nbt.party.o.matsosik.data.api.ReviewApi
 import nbt.party.o.matsosik.data.fake.FakeMatsosikDataSource
 import nbt.party.o.matsosik.data.remote.MatsosikDataSourceImpl
@@ -32,9 +33,10 @@ object MatsosikModule {
     @Singleton
     fun provideMatsosikDataSource(
         @ApplicationContext context: Context,
+        restaurantApi: RestaurantApi,
         reviewApi: ReviewApi
     ): MatsosikDataSource {
-        return MatsosikDataSourceImpl(context, reviewApi)
+        return MatsosikDataSourceImpl(context, restaurantApi, reviewApi)
     }
 
     @FakeMatsosikRepository
